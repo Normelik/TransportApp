@@ -40,6 +40,11 @@ public class ShipmentController {
         return shipmentServiceImpl.deleteShipment(id);
     }
 
+    @PutMapping
+    public Shipment updateShipment(@RequestBody Shipment newShipment) {
+        return shipmentServiceImpl.updateShipment(newShipment);
+    }
+
 
 
 

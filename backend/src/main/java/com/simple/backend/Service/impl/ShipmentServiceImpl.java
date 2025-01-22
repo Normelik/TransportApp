@@ -45,4 +45,14 @@ public class ShipmentServiceImpl implements ShipmentService {
         shipmentRepository.deleteById(id);
         return "Shipment was successfully deleted";
     }
+
+    @Override
+    public Shipment updateShipment(Shipment newShipment) {
+        Shipment updatedShipment = shipmentRepository.findById(newShipment.getId()).orElseThrow(() -> new RuntimeException("Shipment was not found"));
+        updatedShipment.setPlateNumber(newShipment.getPlateNumber());
+        updatedShipment.setTime(newShipment.getTime());
+        updatedShipment.setPlateNumber(newShipment.getPlateNumber());
+
+        return shipmentRepository.save(updatedShipment);
+    }
 }
