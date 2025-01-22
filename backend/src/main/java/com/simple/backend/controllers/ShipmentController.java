@@ -4,12 +4,12 @@ import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.Service.impl.ShipmentServiceImpl;
 import com.simple.backend.models.Shipment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("shipments")
 public class ShipmentController {
 
     private final ShipmentServiceImpl shipmentServiceImpl;
@@ -22,6 +22,11 @@ public class ShipmentController {
     @GetMapping("/{id}")
     public Shipment getShipment( @PathVariable int id) {
         return shipmentServiceImpl.getShipment(id);
+    }
+
+    @GetMapping()
+    public List<Shipment> getAllShipments() {
+        return shipmentServiceImpl.getAllShipments();
     }
 
 

@@ -6,6 +6,8 @@ import com.simple.backend.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
 
@@ -18,5 +20,10 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     public Shipment getShipment(int id) {
         return shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment was not found"));
+    }
+
+    @Override
+    public List<Shipment> getAllShipments() {
+        return shipmentRepository.findAll();
     }
 }
