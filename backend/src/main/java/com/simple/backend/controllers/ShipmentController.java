@@ -35,6 +35,11 @@ public class ShipmentController {
         return shipmentServiceImpl.addShipment(newShipment);
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteShipment(@PathVariable int id) {
+        return shipmentServiceImpl.deleteShipment(id);
+    }
+
 
 
 

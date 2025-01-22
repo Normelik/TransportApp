@@ -36,7 +36,13 @@ public class ShipmentServiceImpl implements ShipmentService {
         newShipment.setIsBooked(shipment.isBooked());
 
         shipmentRepository.save(newShipment);
-        
+
         return newShipment.getId();
+    }
+
+    @Override
+    public String deleteShipment(int id) {
+        shipmentRepository.deleteById(id);
+        return "Shipment was successfully deleted";
     }
 }

@@ -12,4 +12,6 @@ public interface ShipmentService {
     List<Shipment> getAllShipments();
 
     int addShipment(ShipmentDTO shipment);
+
+    String deleteShipment(int id);
 }
