@@ -1,5 +1,6 @@
 package com.simple.backend.Service.impl;
 
+import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.models.Shipment;
 import com.simple.backend.repositories.ShipmentRepository;
@@ -25,5 +26,17 @@ public class ShipmentServiceImpl implements ShipmentService {
     @Override
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
+    }
+
+    @Override
+    public int addShipment(ShipmentDTO shipment) {
+        Shipment newShipment = new Shipment();
+        newShipment.setPlateNumber(shipment.plateNumber());
+        newShipment.setTime(shipment.time());
+        newShipment.setIsBooked(shipment.isBooked());
+
+        shipmentRepository.save(newShipment);
+        
+        return newShipment.getId();
     }
 }

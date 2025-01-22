@@ -1,5 +1,6 @@
 package com.simple.backend.controllers;
 
+import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.Service.impl.ShipmentServiceImpl;
 import com.simple.backend.models.Shipment;
@@ -27,6 +28,11 @@ public class ShipmentController {
     @GetMapping()
     public List<Shipment> getAllShipments() {
         return shipmentServiceImpl.getAllShipments();
+    }
+
+    @PostMapping()
+    public int getAllShipments(@RequestBody ShipmentDTO newShipment) {
+        return shipmentServiceImpl.addShipment(newShipment);
     }
 
 
