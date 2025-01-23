@@ -29,7 +29,7 @@ public class ShipmentController {
     }
 
     @GetMapping()
-    public List<Shipment> getAllShipments() {
+    public List<ShipmentDTO> getAllShipments() {
         return shipmentServiceImpl.getAllShipments();
     }
 

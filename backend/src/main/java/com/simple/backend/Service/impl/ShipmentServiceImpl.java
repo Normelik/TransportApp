@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
@@ -24,8 +25,15 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public List<Shipment> getAllShipments() {
-        return shipmentRepository.findAll();
+    public List<ShipmentDTO> getAllShipments() {
+        List<Shipment> shipments = shipmentRepository.findAll();
+        return shipments.stream()
+                .map(shipment -> new ShipmentDTO(
+                        shipment.getPlateNumber(),
+                        shipment.getIsBooked(),
+                        shipment.getUnloadingTime()
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override

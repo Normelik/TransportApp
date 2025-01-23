@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface ShipmentService {
     Shipment getShipment(int id);
-    List<Shipment> getAllShipments();
+    List<ShipmentDTO> getAllShipments();
 
     int addShipment(ShipmentDTO shipment);
 
