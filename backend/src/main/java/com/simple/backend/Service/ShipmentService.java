@@ -15,5 +15,5 @@ public interface ShipmentService {
 
     String deleteShipment(int id);
 
-    Shipment updateShipment(Shipment newShipment);
+    ShipmentDTO updateShipment(int id, ShipmentDTO newShipment);
 }

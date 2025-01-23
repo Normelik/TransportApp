@@ -20,7 +20,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     public Shipment getShipment(int id) {
-        return shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment was not found"));
+        return shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
     }
 
     @Override
@@ -29,11 +29,11 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public int addShipment(ShipmentDTO shipment) {
+    public int addShipment(ShipmentDTO shipmentDTO) {
         Shipment newShipment = new Shipment();
-        newShipment.setPlateNumber(shipment.plateNumber());
-        newShipment.setUnloadingTime(shipment.unloadingTime());
-        newShipment.setIsBooked(shipment.isBooked());
+        newShipment.setPlateNumber(shipmentDTO.plateNumber());
+        newShipment.setUnloadingTime(shipmentDTO.unloadingTime());
+        newShipment.setIsBooked(shipmentDTO.isBooked());
 
         shipmentRepository.save(newShipment);
 
@@ -42,17 +42,20 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Override
     public String deleteShipment(int id) {
+        shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
         shipmentRepository.deleteById(id);
-        return "Shipment was successfully deleted";
+        return "Shipment with id " + id +" was successfully deleted";
     }
 
     @Override
-    public Shipment updateShipment(Shipment newShipment) {
-        Shipment updatedShipment = shipmentRepository.findById(newShipment.getId()).orElseThrow(() -> new RuntimeException("Shipment was not found"));
-        updatedShipment.setPlateNumber(newShipment.getPlateNumber());
-        updatedShipment.setUnloadingTime(newShipment.getUnloadingTime());
-        updatedShipment.setPlateNumber(newShipment.getPlateNumber());
+    public ShipmentDTO updateShipment(int id,ShipmentDTO newShipment) {
+        Shipment updatedShipment = shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
+        updatedShipment.setPlateNumber(newShipment.plateNumber());
+        updatedShipment.setUnloadingTime(newShipment.unloadingTime());
+        updatedShipment.setIsBooked(newShipment.isBooked());
 
-        return shipmentRepository.save(updatedShipment);
+        shipmentRepository.save(updatedShipment);
+
+        return newShipment;
     }
 }

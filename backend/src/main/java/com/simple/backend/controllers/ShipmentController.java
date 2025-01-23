@@ -1,5 +1,6 @@
 package com.simple.backend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.Service.impl.ShipmentServiceImpl;
@@ -42,9 +43,9 @@ public class ShipmentController {
         return shipmentServiceImpl.deleteShipment(id);
     }
 
-    @PutMapping
-    public Shipment updateShipment(@RequestBody Shipment newShipment) {
-        return shipmentServiceImpl.updateShipment(newShipment);
+    @PutMapping("/{id}")
+    public ShipmentDTO updateShipment(@PathVariable("id") int id,@Valid @RequestBody ShipmentDTO newShipment) {
+        return shipmentServiceImpl.updateShipment(id,newShipment);
     }
 
 
