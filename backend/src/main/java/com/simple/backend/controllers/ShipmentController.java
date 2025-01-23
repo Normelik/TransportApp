@@ -24,7 +24,7 @@ public class ShipmentController {
     }
 
     @GetMapping("/{id}")
-    public Shipment getShipment(@PathVariable("id") int id) {
+    public ShipmentDTO getShipment(@PathVariable("id") int id) {
         return shipmentServiceImpl.getShipment(id);
     }
 

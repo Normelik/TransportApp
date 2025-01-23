@@ -20,8 +20,13 @@ public class ShipmentServiceImpl implements ShipmentService {
         this.shipmentRepository = shipmentRepository;
     }
 
-    public Shipment getShipment(int id) {
-        return shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
+    public ShipmentDTO getShipment(int id) {
+        Shipment shipment = shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
+        return new ShipmentDTO(
+                shipment.getPlateNumber(),
+                shipment.getIsBooked(),
+                shipment.getUnloadingTime()
+        );
     }
 
     @Override
