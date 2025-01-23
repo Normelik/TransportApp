@@ -4,7 +4,9 @@ import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.Service.impl.ShipmentServiceImpl;
 import com.simple.backend.models.Shipment;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class ShipmentController {
     }
 
     @GetMapping("/{id}")
-    public Shipment getShipment( @PathVariable int id) {
+    public Shipment getShipment(@PathVariable("id") int id) {
         return shipmentServiceImpl.getShipment(id);
     }
 
@@ -31,7 +33,7 @@ public class ShipmentController {
     }
 
     @PostMapping()
-    public int getAllShipments(@RequestBody ShipmentDTO newShipment) {
+    public int createShipment(@Valid @RequestBody ShipmentDTO newShipment) {
         return shipmentServiceImpl.addShipment(newShipment);
     }
 

@@ -32,7 +32,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     public int addShipment(ShipmentDTO shipment) {
         Shipment newShipment = new Shipment();
         newShipment.setPlateNumber(shipment.plateNumber());
-        newShipment.setTime(shipment.time());
+        newShipment.setUnloadingTime(shipment.unloadingTime());
         newShipment.setIsBooked(shipment.isBooked());
 
         shipmentRepository.save(newShipment);
@@ -50,7 +50,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     public Shipment updateShipment(Shipment newShipment) {
         Shipment updatedShipment = shipmentRepository.findById(newShipment.getId()).orElseThrow(() -> new RuntimeException("Shipment was not found"));
         updatedShipment.setPlateNumber(newShipment.getPlateNumber());
-        updatedShipment.setTime(newShipment.getTime());
+        updatedShipment.setUnloadingTime(newShipment.getUnloadingTime());
         updatedShipment.setPlateNumber(newShipment.getPlateNumber());
 
         return shipmentRepository.save(updatedShipment);

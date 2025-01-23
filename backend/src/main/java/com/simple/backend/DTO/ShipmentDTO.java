@@ -1,8 +1,10 @@
 package com.simple.backend.DTO;
 
+import lombok.NonNull;
+
 public record ShipmentDTO(
-        String plateNumber,
-        Boolean isBooked,
-        String time
+        @NonNull String plateNumber,
+        @NonNull Boolean isBooked,
+        @NonNull String unloadingTime
 ) {
 }
