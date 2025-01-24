@@ -1,6 +1,8 @@
 package com.simple.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -15,9 +17,10 @@ public class Warehouse {
     @Column(name = "warehouse_name")
     private String name;
     @Column(name = "unloading_place")
-    @NonNull
+    @NotBlank(message = "Unloading place is missing")
     private String unloadingPlace;
     @OneToMany
+    @NotNull
     private List<Shipment> plannedShipments = new ArrayList<>(12);
     private String owner;
     private String supplier;
