@@ -26,6 +26,10 @@ public class Shipment {
     @NotBlank(message = "Unloading time is missing")
     private String unloadingTime;
 
+    @ManyToOne()
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
+
     public int getId() {
         return id;
     }

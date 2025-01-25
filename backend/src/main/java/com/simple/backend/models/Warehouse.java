@@ -19,7 +19,7 @@ public class Warehouse {
     @Column(name = "unloading_place")
     @NotBlank(message = "Unloading place is missing")
     private String unloadingPlace;
-    @OneToMany
+    @OneToMany(mappedBy = "warehouse",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @NotNull
     private List<Shipment> plannedShipments = new ArrayList<>(12);
     private String owner;
