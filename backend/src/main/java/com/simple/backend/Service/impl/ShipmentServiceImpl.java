@@ -3,7 +3,6 @@ package com.simple.backend.Service.impl;
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.models.Shipment;
-import com.simple.backend.models.Warehouse;
 import com.simple.backend.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         return new ShipmentDTO(
                 shipment.getPlateNumber(),
                 shipment.getIsBooked(),
+                shipment.getUnloadingPlace(),
                 shipment.getUnloadingTime()
         );
     }
@@ -37,6 +37,7 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .map(shipment -> new ShipmentDTO(
                         shipment.getPlateNumber(),
                         shipment.getIsBooked(),
+                        shipment.getUnloadingPlace(),
                         shipment.getUnloadingTime()
                 ))
                 .collect(Collectors.toList());
@@ -47,6 +48,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         Shipment newShipment = new Shipment();
         newShipment.setPlateNumber(shipmentDTO.plateNumber());
         newShipment.setUnloadingTime(shipmentDTO.unloadingTime());
+        newShipment.setUnloadingPlace(shipmentDTO.unloadingPlace());
         newShipment.setIsBooked(shipmentDTO.isBooked());
 
         shipmentRepository.save(newShipment);
@@ -67,6 +69,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         updatedShipment.setPlateNumber(newShipment.plateNumber());
         updatedShipment.setUnloadingTime(newShipment.unloadingTime());
         updatedShipment.setIsBooked(newShipment.isBooked());
+        updatedShipment.setUnloadingPlace(newShipment.unloadingPlace());
 
         shipmentRepository.save(updatedShipment);
 

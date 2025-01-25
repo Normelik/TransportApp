@@ -26,6 +26,18 @@ public class Shipment {
     @NotBlank(message = "Unloading time is missing")
     private String unloadingTime;
 
+    @Column(name = "unloading_place")
+    @NotBlank(message = "Unloading place is missing")
+    private String unloadingPlace;
+
+    public @NotBlank(message = "Unloading place is missing") String getUnloadingPlace() {
+        return unloadingPlace;
+    }
+
+    public void setUnloadingPlace(@NotBlank(message = "Unloading place is missing") String unloadingPlace) {
+        this.unloadingPlace = unloadingPlace;
+    }
+
     @ManyToOne()
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;

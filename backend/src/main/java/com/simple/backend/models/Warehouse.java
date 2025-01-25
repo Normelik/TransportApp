@@ -1,9 +1,7 @@
 package com.simple.backend.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +11,43 @@ import java.util.List;
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     @Column(name = "warehouse_name")
     private String name;
-    @Column(name = "unloading_place")
-    @NotBlank(message = "Unloading place is missing")
-    private String unloadingPlace;
     @OneToMany(mappedBy = "warehouse",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @NotNull
     private List<Shipment> plannedShipments = new ArrayList<>(12);
     private String owner;
-    private String supplier;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public @NotNull List<Shipment> getPlannedShipments() {
+        return plannedShipments;
+    }
+
+    public void setPlannedShipments(@NotNull List<Shipment> plannedShipments) {
+        this.plannedShipments = plannedShipments;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }
