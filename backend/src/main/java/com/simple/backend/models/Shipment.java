@@ -3,12 +3,8 @@ package com.simple.backend.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.BooleanFlag;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +32,26 @@ public class Shipment {
 
     public void setUnloadingPlace(@NotBlank(message = "Unloading place is missing") String unloadingPlace) {
         this.unloadingPlace = unloadingPlace;
+    }
+
+    public Shipment() {
+    }
+
+    public Shipment(int id, String plateNumber, Boolean isBooked, String unloadingTime, String unloadingPlace, Warehouse warehouse) {
+        this.id = id;
+        this.plateNumber = plateNumber;
+        this.isBooked = isBooked;
+        this.unloadingTime = unloadingTime;
+        this.unloadingPlace = unloadingPlace;
+        this.warehouse = warehouse;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     @ManyToOne()

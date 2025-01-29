@@ -2,12 +2,16 @@ package com.simple.backend.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "warehouses")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +22,8 @@ public class Warehouse {
     @NotNull
     private List<Shipment> plannedShipments = new ArrayList<>(12);
     private String owner;
+
+
 
     public int getId() {
         return id;
