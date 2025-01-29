@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
 
-    private ShipmentRepository shipmentRepository;
+    private final ShipmentRepository shipmentRepository;
 
     @Autowired
     public ShipmentServiceImpl(ShipmentRepository shipmentRepository) {
@@ -26,7 +26,8 @@ public class ShipmentServiceImpl implements ShipmentService {
                 shipment.getPlateNumber(),
                 shipment.getIsBooked(),
                 shipment.getUnloadingPlace(),
-                shipment.getUnloadingTime()
+                shipment.getUnloadingTime(),
+                shipment.getWarehouse()
         );
     }
 
@@ -38,7 +39,8 @@ public class ShipmentServiceImpl implements ShipmentService {
                         shipment.getPlateNumber(),
                         shipment.getIsBooked(),
                         shipment.getUnloadingPlace(),
-                        shipment.getUnloadingTime()
+                        shipment.getUnloadingTime(),
+                        shipment.getWarehouse()
                 ))
                 .collect(Collectors.toList());
     }
@@ -73,6 +75,12 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         shipmentRepository.save(updatedShipment);
 
-        return newShipment;
+        return new ShipmentDTO(
+                newShipment.plateNumber(),
+                newShipment.isBooked(),
+                newShipment.unloadingPlace(),
+                newShipment.unloadingTime(),
+                newShipment.warehouse()
+        );
     }
 }
