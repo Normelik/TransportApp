@@ -1,28 +1,24 @@
 package com.simple.backend.models;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Shipment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private int id;
 
-    @Column(name = "plate_number", nullable = false)
     @NotBlank(message = "Plate number is missing")
     private String plateNumber;
 
-    @Column(name = "is_booked", nullable = false)
     @BooleanFlag
     private Boolean isBooked;
 
-    @Column(nullable = false)
     @NotBlank(message = "Unloading time is missing")
     private String unloadingTime;
 
