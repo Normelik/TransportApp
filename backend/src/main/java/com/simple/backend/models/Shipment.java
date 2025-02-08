@@ -2,55 +2,85 @@ package com.simple.backend.models;
 
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.BooleanFlag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Builder
 public class Shipment {
 
-    private int id;
+    @NotBlank(message = "unloading time can't be empty")
+    private String unloadingTime;
 
-    @NotBlank(message = "Plate number is missing")
+    @NotBlank(message = "unloading place can't be empty")
+    private String unloadingPlace;
+
+    @NotBlank(message = "plate number can't be empty")
     private String plateNumber;
 
     @BooleanFlag
     private Boolean isBooked;
 
-    @NotBlank(message = "Unloading time is missing")
-    private String unloadingTime;
+    private String text;
 
-    public int getId() {
-        return id;
+    private int duration;
+
+    public Shipment() {
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getPlateNumber() {
-        return plateNumber;
-    }
-
-    public void setPlateNumber(String plateNumber) {
+    public Shipment( String unloadingTime, String unloadingPlace, String plateNumber, Boolean isBooked, String text, int duration) {
+        this.unloadingTime = unloadingTime;
+        this.unloadingPlace = unloadingPlace;
         this.plateNumber = plateNumber;
+        this.isBooked = isBooked;
+        this.text = text;
+        this.duration = duration;
     }
 
-    public Boolean getIsBooked() {
-        return isBooked;
-    }
-
-    public void setIsBooked(Boolean booked) {
-        isBooked = booked;
-    }
-
-    public String getUnloadingTime() {
+    public @NotBlank(message = "unloading time can't be empty") String getUnloadingTime() {
         return unloadingTime;
     }
 
-    public void setUnloadingTime(String unloadingTime) {
+    public void setUnloadingTime(@NotBlank(message = "unloading time can't be empty") String unloadingTime) {
         this.unloadingTime = unloadingTime;
+    }
+
+    public @NotBlank(message = "unloading place can't be empty") String getUnloadingPlace() {
+        return unloadingPlace;
+    }
+
+    public void setUnloadingPlace(@NotBlank(message = "unloading place can't be empty") String unloadingPlace) {
+        this.unloadingPlace = unloadingPlace;
+    }
+
+    public @NotBlank(message = "plate number can't be empty") String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(@NotBlank(message = "plate number can't be empty") String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    public Boolean getBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(Boolean booked) {
+        isBooked = booked;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

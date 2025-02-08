@@ -1,19 +1,21 @@
 package com.simple.backend.Service;
 
 import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.models.Shipment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
 public interface ShipmentService {
-    ShipmentDTO getShipment(int id);
+
+    ShipmentDTO getShipment(long id);
     
-    List<ShipmentDTO> getAllShipments();
+//    List<ShipmentDTO> getAllShipments();
+//
+    ShipmentDTO addShipment(Shipment shipment);
 
-    int addShipment(ShipmentDTO shipment);
+//    String deleteShipment(int id);
 
-    String deleteShipment(int id);
-
-    ShipmentDTO updateShipment(int id, ShipmentDTO newShipment);
+//    ShipmentDTO updateShipment(int id, ShipmentDTO newShipment);
 }
