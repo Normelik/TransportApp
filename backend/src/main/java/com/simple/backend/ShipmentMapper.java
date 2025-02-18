@@ -2,54 +2,28 @@ package com.simple.backend;
 
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.entities.ShipmentEntity;
-import com.simple.backend.models.Shipment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShipmentMapper {
 
-    public Shipment getShipmentFromShipmentDTO(ShipmentDTO shipmentDTO) {
-        if (shipmentDTO == null) {
-            return null;
-        }
-        return new Shipment(
-                shipmentDTO.unloadingTime(),
-                shipmentDTO.unloadingPlace(),
-                shipmentDTO.plateNumber(),
-                shipmentDTO.isBooked(),
-                shipmentDTO.text(),
-                shipmentDTO.duration()
-        );
+    public ShipmentEntity toEntity(ShipmentDTO dto) {
+        ShipmentEntity shipment = new ShipmentEntity();
+        shipment.setUnloadingTime(dto.unloadingTime());
+        shipment.setUnloadingPlace(dto.unloadingPlace());
+        shipment.setPlateNumber(dto.plateNumber());
+        shipment.setBooked(dto.isBooked());
+        shipment.setText(dto.text());
+        shipment.setDuration(dto.duration() != null ? dto.duration() : 0);
+        return shipment;
     }
 
-    public ShipmentDTO getShipmentDTOFromShipment(Shipment shipment) {
+    public ShipmentDTO toDTO(ShipmentEntity shipment) {
         return new ShipmentDTO(
                 shipment.getUnloadingTime(),
                 shipment.getUnloadingPlace(),
                 shipment.getPlateNumber(),
-                shipment.getBooked(),
-                shipment.getText(),
-                shipment.getDuration()
-        );
-    }
-
-    public ShipmentDTO getShipmentDTOFromShipmentEntity(ShipmentEntity shipmentEntity) {
-        return new ShipmentDTO(
-                shipmentEntity.getUnloadingTime(),
-                shipmentEntity.getUnloadingPlace(),
-                shipmentEntity.getPlateNumber(),
-                shipmentEntity.getIsBooked(),
-                shipmentEntity.getText(),
-                shipmentEntity.getDuration()
-        );
-    }
-
-    public ShipmentEntity getShipmentEntityFromShipment(Shipment shipment) {
-        return new ShipmentEntity(
-                shipment.getUnloadingTime(),
-                shipment.getUnloadingPlace(),
-                shipment.getPlateNumber(),
-                shipment.getBooked(),
+                shipment.isBooked(),
                 shipment.getText(),
                 shipment.getDuration()
         );

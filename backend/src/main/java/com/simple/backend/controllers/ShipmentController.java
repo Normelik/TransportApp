@@ -1,13 +1,10 @@
 package com.simple.backend.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.backend.DTO.ShipmentDTO;
-import com.simple.backend.Service.impl.ShipmentServiceImpl;
-import com.simple.backend.ShipmentMapper;
-import com.simple.backend.models.Shipment;
+import com.simple.backend.Service.ShipmentService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,50 +12,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/shipments")
+@RequiredArgsConstructor
 public class ShipmentController {
 
-    private final ShipmentServiceImpl shipmentServiceImpl;
+    private final ShipmentService shipmentService;
 
-    private final ShipmentMapper shipmentMapper;
-
-    @Autowired
-    public ShipmentController(ShipmentServiceImpl shipmentServiceImpl, ShipmentMapper shipmentMapper, ShipmentMapper shipmentMapper1) {
-        this.shipmentServiceImpl = shipmentServiceImpl;
-        this.shipmentMapper = shipmentMapper1;
+    @GetMapping
+    public List<ShipmentDTO> getAllShipments() {
+        return shipmentService.getAllShipments();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShipmentDTO> getShipment(@PathVariable("id") long id) {
-        return new ResponseEntity<>(shipmentServiceImpl.getShipment(id), HttpStatus.OK);
+    public ResponseEntity<ShipmentDTO> getShipmentById(@PathVariable Long id) {
+        return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
 
-//    @GetMapping()
-//    public ResponseEntity<List<ShipmentDTO>> getAllShipments() {
-//        return new ResponseEntity<>(shipmentServiceImpl.getAllShipments(),HttpStatus.OK);
-//    }
-//
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
-        Shipment newShipment = shipmentMapper.getShipmentFromShipmentDTO(shipmentDTO);
-        System.out.println(newShipment);
-        return new ResponseEntity<>(shipmentServiceImpl.addShipment(newShipment),HttpStatus.CREATED);
+        return ResponseEntity.ok(shipmentService.createShipment(shipmentDTO));
     }
 
-//    @DeleteMapping("/{id}")
-//    public String deleteShipment(@PathVariable int id) {
-//        return shipmentServiceImpl.deleteShipment(id);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ShipmentDTO updateShipment(@PathVariable("id") int id,@Valid @RequestBody ShipmentDTO newShipment) {
-//        return shipmentServiceImpl.updateShipment(id,newShipment);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDTO) {
+        return ResponseEntity.ok(shipmentService.updateShipment(id, shipmentDTO));
+    }
 
-
-
-
-
-
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteShipment(@PathVariable Long id) {
+        shipmentService.deleteShipment(id);
+        return ResponseEntity.noContent().build();
+    }
 }
