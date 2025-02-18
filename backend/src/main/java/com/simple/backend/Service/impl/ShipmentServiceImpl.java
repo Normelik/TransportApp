@@ -2,85 +2,70 @@ package com.simple.backend.Service.impl;
 
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
-import com.simple.backend.models.Shipment;
+import com.simple.backend.ShipmentMapper;
+import com.simple.backend.entities.ShipmentEntity;
 import com.simple.backend.repositories.ShipmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ShipmentServiceImpl implements ShipmentService {
 
     private final ShipmentRepository shipmentRepository;
-
-    @Autowired
-    public ShipmentServiceImpl(ShipmentRepository shipmentRepository) {
-        this.shipmentRepository = shipmentRepository;
-    }
-
-    public ShipmentDTO getShipment(int id) {
-        Shipment shipment = shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
-        return new ShipmentDTO(
-                shipment.getPlateNumber(),
-                shipment.getIsBooked(),
-                shipment.getUnloadingPlace(),
-                shipment.getUnloadingTime(),
-                shipment.getWarehouse()
-        );
-    }
+    private final ShipmentMapper shipmentMapper;
 
     @Override
     public List<ShipmentDTO> getAllShipments() {
-        List<Shipment> shipments = shipmentRepository.findAll();
-        return shipments.stream()
-                .map(shipment -> new ShipmentDTO(
-                        shipment.getPlateNumber(),
-                        shipment.getIsBooked(),
-                        shipment.getUnloadingPlace(),
-                        shipment.getUnloadingTime(),
-                        shipment.getWarehouse()
-                ))
-                .collect(Collectors.toList());
+        return shipmentRepository.findAll()
+                .stream()
+                .map(shipmentMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public int addShipment(ShipmentDTO shipmentDTO) {
-        Shipment newShipment = new Shipment();
-        newShipment.setPlateNumber(shipmentDTO.plateNumber());
-        newShipment.setUnloadingTime(shipmentDTO.unloadingTime());
-        newShipment.setUnloadingPlace(shipmentDTO.unloadingPlace());
-        newShipment.setIsBooked(shipmentDTO.isBooked());
-
-        shipmentRepository.save(newShipment);
-
-        return newShipment.getId();
+    public ShipmentDTO getShipmentById(Long id) {
+        ShipmentEntity shipment = shipmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Shipment not found with ID: " + id));
+        return shipmentMapper.toDTO(shipment);
     }
 
     @Override
-    public String deleteShipment(int id) {
-        shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
-        shipmentRepository.deleteById(id);
-        return "Shipment with id " + id +" was successfully deleted";
+    public ShipmentDTO createShipment(ShipmentDTO shipmentDTO) {
+        ShipmentEntity shipment = shipmentMapper.toEntity(shipmentDTO);
+        try {
+            ShipmentEntity savedShipment = shipmentRepository.save(shipment);
+            return shipmentMapper.toDTO(savedShipment);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public ShipmentDTO updateShipment(int id,ShipmentDTO newShipment) {
-        Shipment updatedShipment = shipmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Shipment with id " + id +" was not found"));
-        updatedShipment.setPlateNumber(newShipment.plateNumber());
-        updatedShipment.setUnloadingTime(newShipment.unloadingTime());
-        updatedShipment.setIsBooked(newShipment.isBooked());
-        updatedShipment.setUnloadingPlace(newShipment.unloadingPlace());
+    @Transactional
+    public ShipmentDTO updateShipment(Long id, ShipmentDTO shipmentDTO) {
+        ShipmentEntity existingShipment = shipmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Shipment not found with ID: " + id));
 
-        shipmentRepository.save(updatedShipment);
+        if(shipmentDTO.unloadingTime() != null) existingShipment.setUnloadingTime(shipmentDTO.unloadingTime());
+        if(shipmentDTO.unloadingPlace() != null) existingShipment.setUnloadingPlace(shipmentDTO.unloadingPlace());
+        if(shipmentDTO.plateNumber() != null) existingShipment.setPlateNumber(shipmentDTO.plateNumber());
+        existingShipment.setBooked(shipmentDTO.isBooked());
+        if(shipmentDTO.text() != null) existingShipment.setText(shipmentDTO.text());
+        if(shipmentDTO.duration() != null) existingShipment.setDuration(shipmentDTO.duration());
 
-        return new ShipmentDTO(
-                newShipment.plateNumber(),
-                newShipment.isBooked(),
-                newShipment.unloadingPlace(),
-                newShipment.unloadingTime(),
-                newShipment.warehouse()
-        );
+        ShipmentEntity updatedShipment = shipmentRepository.save(existingShipment);
+        return shipmentMapper.toDTO(updatedShipment);
+    }
+
+    @Override
+    public void deleteShipment(Long id) {
+        ShipmentEntity shipment = shipmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Shipment not found with ID: " + id));
+        shipmentRepository.delete(shipment);
     }
 }

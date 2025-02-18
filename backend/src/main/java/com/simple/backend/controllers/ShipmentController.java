@@ -1,58 +1,45 @@
 package com.simple.backend.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
-import com.simple.backend.Service.impl.ShipmentServiceImpl;
-import com.simple.backend.models.Shipment;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("shipments")
+@RequestMapping("/api/shipments")
+@RequiredArgsConstructor
 public class ShipmentController {
 
-    private final ShipmentServiceImpl shipmentServiceImpl;
+    private final ShipmentService shipmentService;
 
-    @Autowired
-    public ShipmentController( ShipmentServiceImpl shipmentServiceImpl) {
-        this.shipmentServiceImpl = shipmentServiceImpl;
+    @GetMapping
+    public List<ShipmentDTO> getAllShipments() {
+        return shipmentService.getAllShipments();
     }
 
     @GetMapping("/{id}")
-    public ShipmentDTO getShipment(@PathVariable("id") int id) {
-        return shipmentServiceImpl.getShipment(id);
+    public ResponseEntity<ShipmentDTO> getShipmentById(@PathVariable Long id) {
+        return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
 
-    @GetMapping()
-    public List<ShipmentDTO> getAllShipments() {
-        return shipmentServiceImpl.getAllShipments();
-    }
-
-    @PostMapping()
-    public int createShipment(@Valid @RequestBody ShipmentDTO newShipment) {
-        return shipmentServiceImpl.addShipment(newShipment);
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteShipment(@PathVariable int id) {
-        return shipmentServiceImpl.deleteShipment(id);
+    @PostMapping
+    public ResponseEntity<ShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
+        return ResponseEntity.ok(shipmentService.createShipment(shipmentDTO));
     }
 
     @PutMapping("/{id}")
-    public ShipmentDTO updateShipment(@PathVariable("id") int id,@Valid @RequestBody ShipmentDTO newShipment) {
-        return shipmentServiceImpl.updateShipment(id,newShipment);
+    public ResponseEntity<ShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDTO) {
+        return ResponseEntity.ok(shipmentService.updateShipment(id, shipmentDTO));
     }
 
-
-
-
-
-
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteShipment(@PathVariable Long id) {
+        shipmentService.deleteShipment(id);
+        return ResponseEntity.noContent().build();
+    }
 }

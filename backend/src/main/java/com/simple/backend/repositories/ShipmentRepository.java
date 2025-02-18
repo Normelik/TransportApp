@@ -1,7 +1,10 @@
 package com.simple.backend.repositories;
 
-import com.simple.backend.models.Shipment;
+import com.simple.backend.entities.ShipmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
+@Repository
+public interface ShipmentRepository extends JpaRepository<ShipmentEntity, Long> {
+
 }

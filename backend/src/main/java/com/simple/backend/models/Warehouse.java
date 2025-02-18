@@ -1,59 +1,28 @@
 package com.simple.backend.models;
 
+import com.simple.backend.entities.ShipmentEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "warehouses")
-@NoArgsConstructor
-@AllArgsConstructor
-public class Warehouse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column(name = "warehouse_name")
-    private String name;
-    @OneToMany(mappedBy = "warehouse",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @NotNull
-    private List<Shipment> plannedShipments = new ArrayList<>(12);
-    private String owner;
-
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public @NotNull List<Shipment> getPlannedShipments() {
-        return plannedShipments;
-    }
-
-    public void setPlannedShipments(@NotNull List<Shipment> plannedShipments) {
-        this.plannedShipments = plannedShipments;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-}
+//@Entity
+//@Table(name = "warehouses")
+//public class Warehouse {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private Long id;
+//    @Column(name = "warehouse_name")
+//    private String name;
+//    @Column(name = "unloading_place")
+//    @NotBlank(message = "Unloading place is missing")
+//    private String unloadingPlace;
+//    @OneToMany
+//    @NotNull
+//    private List<ShipmentEntity> plannedShipments = new ArrayList<>(12);
+//    private String owner;
+//    private String supplier;
+//}
