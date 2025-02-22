@@ -2,7 +2,7 @@ package com.simple.backend.Service.impl;
 
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
-import com.simple.backend.ShipmentMapper;
+import com.simple.backend.mappers.ShipmentMapper;
 import com.simple.backend.entities.ShipmentEntity;
 import com.simple.backend.repositories.ShipmentRepository;
 import jakarta.persistence.EntityNotFoundException;

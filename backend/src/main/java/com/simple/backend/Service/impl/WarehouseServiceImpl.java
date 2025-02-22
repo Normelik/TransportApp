@@ -2,74 +2,80 @@ package com.simple.backend.Service.impl;
 
 import com.simple.backend.DTO.WarehouseDTO;
 import com.simple.backend.Service.WarehouseService;
-import com.simple.backend.models.Warehouse;
+import com.simple.backend.entities.ShipmentEntity;
+import com.simple.backend.mappers.ShipmentMapper;
+import com.simple.backend.mappers.WarehouseMapper;
+import com.simple.backend.models.WarehouseEntity;
 import com.simple.backend.repositories.WarehouseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class WarehouseServiceImpl implements WarehouseService {
 
-    private WarehouseRepository warehouseRepository;
-    
-    @Autowired
-    public WarehouseServiceImpl(WarehouseRepository warehouseRepository) {
-        this.warehouseRepository = warehouseRepository;
-    }
-
-    public WarehouseDTO getWarehouse(int id) {
-        Warehouse warehouse = warehouseRepository.findById(id).orElseThrow(() -> new RuntimeException("Warehouse with id " + id +" was not found"));
-        return new WarehouseDTO(
-                warehouse.getName(),
-                warehouse.getPlannedShipments(),
-                warehouse.getOwner()
-        );
-    }
+    private final WarehouseRepository warehouseRepository;
+    private final WarehouseMapper warehouseMapper;
+    private final ShipmentMapper shipmentMapper;
 
     @Override
     public List<WarehouseDTO> getAllWarehouses() {
-        List<Warehouse> warehouses = warehouseRepository.findAll();
-        return warehouses.stream()
-                .map(warehouse -> new WarehouseDTO(
-                        warehouse.getName(),
-                        warehouse.getPlannedShipments(),
-                        warehouse.getOwner()
-                ))
-                .collect(Collectors.toList());
+        return warehouseRepository.findAll()
+                .stream()
+                .map(warehouseMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public int addWarehouse(WarehouseDTO warehouseDTO) {
-        Warehouse newWarehouse = new Warehouse();
-        newWarehouse.setName(warehouseDTO.name());
-        newWarehouse.setPlannedShipments(warehouseDTO.plannedShipments());
-        newWarehouse.setOwner(warehouseDTO.owner());
-
-        warehouseRepository.save(newWarehouse);
-
-        return newWarehouse.getId();
+    public WarehouseDTO getWarehouseById(Long id) {
+        WarehouseEntity warehouse = warehouseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Warehouse not found with ID: " + id));
+        return warehouseMapper.toDTO(warehouse);
     }
 
     @Override
-    public String deleteWarehouse(int id) {
-        warehouseRepository.findById(id).orElseThrow(() -> new RuntimeException("Warehouse with id " + id +" was not found"));
-        warehouseRepository.deleteById(id);
-        return "Warehouse with id " + id +" was successfully deleted";
+    public WarehouseDTO createWarehouse(WarehouseDTO warehouseDTO) {
+        WarehouseEntity warehouse = warehouseMapper.toEntity(warehouseDTO);
+        try {
+            WarehouseEntity savedWarehouse = warehouseRepository.save(warehouse);
+            return warehouseMapper.toDTO(savedWarehouse);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public WarehouseDTO updateWarehouse(int id,WarehouseDTO newWarehouse) {
-        Warehouse updatedWarehouse = warehouseRepository.findById(id).orElseThrow(() -> new RuntimeException("Warehouse with id " + id +" was not found"));
-        updatedWarehouse.setName(newWarehouse.name());
-        updatedWarehouse.setPlannedShipments(newWarehouse.plannedShipments());
-        updatedWarehouse.setOwner(newWarehouse.owner());
+    @Transactional
+    public WarehouseDTO updateWarehouse(Long id, WarehouseDTO warehouseDTO) {
+        WarehouseEntity existingWarehouse = warehouseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Warehouse not found with ID: " + id));
 
-        warehouseRepository.save(updatedWarehouse);
+        if (warehouseDTO.name() != null) existingWarehouse.setName(warehouseDTO.name());
+        if (warehouseDTO.unloadingPlace() != null) existingWarehouse.setUnloadingPlace(warehouseDTO.unloadingPlace());
 
-        return newWarehouse;
+        if (!warehouseDTO.plannedShipments().isEmpty()) {
+            List<ShipmentEntity> shipmentEntityList = warehouseDTO.plannedShipments().stream()
+                    .map(shipmentMapper::toEntity)
+                    .collect(Collectors.toList());
+            existingWarehouse.setPlannedShipments(shipmentEntityList);
+        }
+        if (warehouseDTO.supplier() != null) existingWarehouse.setSupplier(warehouseDTO.supplier());
+        if (warehouseDTO.owner() != null) existingWarehouse.setOwner(warehouseDTO.owner());
+
+        WarehouseEntity updatedWarehouse = warehouseRepository.save(existingWarehouse);
+        return warehouseMapper.toDTO(updatedWarehouse);
+
+    }
+    @Override
+    public void deleteWarehouse(Long id) {
+        WarehouseEntity warehouse = warehouseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Warehouse not found with ID: " + id));
+        warehouseRepository.delete(warehouse);
     }
 }
 
