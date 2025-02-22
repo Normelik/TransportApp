@@ -29,8 +29,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req
-                                .requestMatchers("/api/shipments").authenticated()
-                                .anyRequest().permitAll())
+                                .requestMatchers("api/health-check").permitAll()
+                                .requestMatchers("/register").permitAll()
+                                .anyRequest().authenticated()
+                                )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
