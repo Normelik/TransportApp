@@ -7,13 +7,10 @@ import java.util.List;
 
 @Service
 public interface WarehouseService {
-    WarehouseDTO getWarehouse(int id);
-
     List<WarehouseDTO> getAllWarehouses();
+    WarehouseDTO getWarehouseById(Long id);
+    WarehouseDTO createWarehouse(WarehouseDTO warehouseDTO);
+    WarehouseDTO updateWarehouse(Long id, WarehouseDTO warehouseDTO);
+    void deleteWarehouse(Long id);
 
-    int addWarehouse(WarehouseDTO warehouseDTO);
-
-    String deleteWarehouse(int id);
-
-    WarehouseDTO updateWarehouse(int id, WarehouseDTO warehouseDTO);
 }

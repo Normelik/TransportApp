@@ -1,4 +1,4 @@
-package com.simple.backend;
+package com.simple.backend.mappers;
 
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.entities.ShipmentEntity;
