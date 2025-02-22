@@ -1,6 +1,5 @@
 package com.simple.backend.entities;
 
-import com.simple.backend.models.WarehouseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
