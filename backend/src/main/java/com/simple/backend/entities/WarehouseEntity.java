@@ -1,9 +1,6 @@
-package com.simple.backend.models;
+package com.simple.backend.entities;
 
-import com.simple.backend.entities.ShipmentEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,7 +5,7 @@ import com.simple.backend.Service.WarehouseService;
 import com.simple.backend.entities.ShipmentEntity;
 import com.simple.backend.mappers.ShipmentMapper;
 import com.simple.backend.mappers.WarehouseMapper;
-import com.simple.backend.models.WarehouseEntity;
+import com.simple.backend.entities.WarehouseEntity;
 import com.simple.backend.repositories.WarehouseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

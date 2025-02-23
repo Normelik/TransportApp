@@ -3,7 +3,7 @@ package com.simple.backend.mappers;
 import com.simple.backend.DTO.ShipmentDTO;
 import com.simple.backend.DTO.WarehouseDTO;
 import com.simple.backend.entities.ShipmentEntity;
-import com.simple.backend.models.WarehouseEntity;
+import com.simple.backend.entities.WarehouseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
