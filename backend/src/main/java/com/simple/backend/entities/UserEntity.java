@@ -1,9 +1,6 @@
 package com.simple.backend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,8 @@ public class UserEntity {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name = "username",unique = true, nullable = false)
     private String username;
+    @Column(name = "password", nullable = false)
     private String password;
 }
