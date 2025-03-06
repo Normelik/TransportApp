@@ -1,6 +1,7 @@
 package com.simple.backend.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -33,7 +34,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
     }
 
-/*
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Map<String, String> handleGeneralException(Exception  ex, HttpHeaders headers, HttpStatus httpStatus) {
@@ -43,5 +43,5 @@ public class GlobalExceptionHandler {
         errorMap.put("header: ", headers.toString());
         errorMap.put("An error occurred: ", ex.getMessage());
         return errorMap;
-    }*/
+    }
 }

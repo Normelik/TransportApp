@@ -1,15 +1,12 @@
 package com.simple.backend.Service;
 
-import com.simple.backend.DTO.UserDTO;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.simple.backend.DTO.RequestUserDTO;
+import com.simple.backend.DTO.ResponseUserDTO;
+import org.apache.tomcat.websocket.AuthenticationException;
 
-import java.util.List;
+public interface UserService {
 
-public interface UserService extends UserDetailsService {
+    ResponseUserDTO registerUser(RequestUserDTO requestUserDTO);
 
-    UserDTO registerUser(UserDTO userDTO);
-
-    UserDTO loginUser(UserDTO userDTO);
-
-    List<UserDTO> getAllUsers();
+    ResponseUserDTO loginUser(RequestUserDTO requestUserDTO) throws AuthenticationException;
 }

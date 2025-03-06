@@ -1,74 +1,73 @@
 package com.simple.backend.Service.impl;
 
-import com.simple.backend.DTO.ShipmentDTO;
-import com.simple.backend.DTO.UserDTO;
+import com.simple.backend.DTO.RequestUserDTO;
+import com.simple.backend.DTO.ResponseUserDTO;
 import com.simple.backend.Service.UserService;
 import com.simple.backend.entities.UserEntity;
-import com.simple.backend.models.UserPrincipal;
 import com.simple.backend.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationProvider provider;
+    private final JwtService jwtService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationProvider provider, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.provider = provider;
+        this.jwtService = jwtService;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        UserEntity userEntity = userRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User not found in database with username: " + username));
 
-        return new UserPrincipal(userEntity);
-    }
-
-    public UserDTO registerUser(UserDTO userDTO) {
-        if(userDTO == null){
-            throw new UsernameNotFoundException("User not found");
-        }
-        UserEntity newUser = new UserEntity();
-        newUser.setUsername(userDTO.username());
-        newUser.setPassword(encoder.encode(userDTO.password()));
-        System.out.println(newUser.getPassword());
-
-        userRepository.save(newUser);
-
-        return new UserDTO(
-                newUser.getUsername(),
-                newUser.getPassword()
-        );
-    }
-
-    @Override
-    public UserDTO loginUser(UserDTO userDTO) {
-        UserEntity userEntity = userRepository.findByUsername(userDTO.username())
-                .orElseThrow(() -> new EntityNotFoundException("User not found in database with username: " + userDTO.username()));
-
-        encoder.matches(userDTO.password(), userEntity.getPassword());
-        return new UserDTO(userEntity.getUsername(), userEntity.getPassword());
-    }
-
-    @Override
-    public List<UserDTO> getAllUsers() {
+    public List<RequestUserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(username -> {
-                    return new UserDTO(
+                    return new RequestUserDTO(
                             username.getUsername(),
                             username.getPassword()
                     );
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseUserDTO registerUser(RequestUserDTO requestUserDTO) {
+        if (userRepository.existsByUsername(requestUserDTO.username())){
+            throw new UsernameNotFoundException("username already exists in database"); // TODO - usernameAlreadyExistsException
+        }
+
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername(requestUserDTO.username());
+        newUser.setPassword(passwordEncoder.encode(requestUserDTO.password()));
+
+        userRepository.save(newUser);
+
+        return new ResponseUserDTO(newUser.getUsername());
+    }
+
+    @Override
+    public ResponseUserDTO loginUser(RequestUserDTO requestUserDTO) {
+        Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(requestUserDTO.username(), requestUserDTO.password());
+        Authentication authentication = provider.authenticate(authenticationRequest);
+        if (!authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new ResponseUserDTO(jwtService.generateToken(authentication)); // TODO tokenservice.generateToken
     }
 }
