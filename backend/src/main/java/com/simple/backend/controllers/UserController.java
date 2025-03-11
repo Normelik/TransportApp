@@ -1,6 +1,7 @@
 package com.simple.backend.controllers;
 
-import com.simple.backend.DTO.UserDTO;
+import com.simple.backend.DTO.RequestUserDTO;
+import com.simple.backend.DTO.ResponseUserDTO;
 import com.simple.backend.Service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,14 @@ public class UserController {
 
     private final UserServiceImpl userServiceImpl;
 
+
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> userRegistration(@RequestBody @Valid UserDTO userDTO){
-        return new ResponseEntity<>(userServiceImpl.registerUser(userDTO), HttpStatus.OK);
+    public ResponseEntity<ResponseUserDTO> userRegistration(@RequestBody RequestUserDTO requestUserDTO){
+        return new ResponseEntity<>(userServiceImpl.registerUser(requestUserDTO), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> userLogin(@RequestBody UserDTO userDTO){
-        return new ResponseEntity<>(userServiceImpl.loginUser(userDTO), HttpStatus.OK);
+    public ResponseEntity<ResponseUserDTO> userLogin(@RequestBody RequestUserDTO requestUserDTO){
+        return new ResponseEntity<>(userServiceImpl.loginUser(requestUserDTO), HttpStatus.OK);
     }
 }
