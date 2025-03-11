@@ -5,11 +5,13 @@ import com.simple.backend.DTO.ResponseUserDTO;
 import com.simple.backend.Service.UserService;
 import com.simple.backend.entities.UserEntity;
 import com.simple.backend.repositories.UserRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -19,20 +21,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationProvider provider;
     private final JwtService jwtService;
-
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationProvider provider, JwtService jwtService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.provider = provider;
-        this.jwtService = jwtService;
-    }
-
+    private final AuthenticationProvider provider;
 
     public List<RequestUserDTO> getAllUsers() {
         return userRepository.findAll()
@@ -68,6 +63,7 @@ public class UserServiceImpl implements UserService{
         if (!authentication.isAuthenticated()) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new ResponseUserDTO(jwtService.generateToken(authentication)); // TODO tokenservice.generateToken
+        return new ResponseUserDTO(jwtService.generateToken(requestUserDTO.username()));
     }
+
 }
