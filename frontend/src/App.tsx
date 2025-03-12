@@ -1,11 +1,8 @@
-import "./App.css";
+import './App.css';
+import LandingPage from './pages/LandingPage';
 
 function App() {
-  return (
-    <>
-      <h1 className="text-6xl fond-bold underline">Hello world</h1>
-    </>
-  );
+  return <></>;
 }
 
 export default App;
