@@ -1,1 +1,14 @@
 @import "tailwindcss";
+body{
+    background-color: #D9D9D9;
+    color: #0D0D0D;
+}
+.one-shipment{
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    padding: 5px;
+    width: 600px;
+    border: #0D0D0D solid;
+
+}
