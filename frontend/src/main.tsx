@@ -1,8 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
-import { Provider } from './components/ui/provider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
@@ -10,6 +9,7 @@ import ShipmentsPage from './pages/ShipmentsPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import HomePage from './pages/HomePage.tsx';
+import RegistrationForm from './components/ui/Registration/RegistrationForm.tsx';
 
 const router = createBrowserRouter([
   {
@@ -34,12 +34,18 @@ const router = createBrowserRouter([
     path: '/profile',
     element: <ProfilePage />,
   },
+  {
+    path: '/register',
+    element: <RegistrationForm />,
+  },
 ]);
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </Provider>
+    </QueryClientProvider>
   </StrictMode>
 );

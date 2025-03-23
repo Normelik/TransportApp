@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/public")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
@@ -20,7 +22,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseUserDTO> userRegistration(@RequestBody RequestUserDTO requestUserDTO){
-        return new ResponseEntity<>(userServiceImpl.registerUser(requestUserDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userServiceImpl.registerUser(requestUserDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

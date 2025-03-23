@@ -1,7 +1,11 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 body{
-    background-color: #D9D9D9;
-    color: #0D0D0D;
+    margin: 0;
+    padding: 0;
+    color: #493628;
+    font-family: "Poppins", sans-serif;
+    background-color: #E4E0E1;
 }
 .one-shipment{
     display: flex;
