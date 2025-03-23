@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseUserDTO> userRegistration(@RequestBody RequestUserDTO requestUserDTO){
-        return new ResponseEntity<>(userServiceImpl.registerUser(requestUserDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userServiceImpl.registerUser(requestUserDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

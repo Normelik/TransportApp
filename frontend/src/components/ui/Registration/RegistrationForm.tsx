@@ -37,7 +37,6 @@ const RegistrationForm = () => {
       .catch((error) => {
         console.log(error);
       });
-    setUserData({ username: '', password: '' });
   };
 
   return (
