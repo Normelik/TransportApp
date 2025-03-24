@@ -44,6 +44,11 @@ h2 {
   margin-bottom: 20px;
   color: #fff;
 }
+h4{
+  font-size: 15px;
+  margin-top: 15px;
+  color: green;
+}
 
 .input-field {
   justify-content: center;
@@ -86,4 +91,11 @@ color: #fff;
   text-align: center;
   margin-top: 30px;
   color: #fff;
+}
+
+.register-message{
+  color: red;
+  font-size: larger;
+  font-weight: bold;
+  margin-top: 15px;
 }

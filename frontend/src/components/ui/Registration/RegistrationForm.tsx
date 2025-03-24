@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './RegistrationForm.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -15,9 +15,13 @@ const RegistrationForm = () => {
     username: '',
     password: '',
   });
+  const [registerMessage, setRegisterMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    setRegisterMessage('');
+    setLoading(true);
     console.log(userData);
     sendToBackend();
   };
@@ -27,22 +31,33 @@ const RegistrationForm = () => {
   };
 
   const sendToBackend = async () => {
-    await axios
-      .post(url, userData, {
+    try {
+      const response = await axios.post(url, userData, {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then((response) => console.log(response))
-      .catch((error) => {
-        console.log(error);
       });
+
+      if (response.status === 201) {
+        setRegisterMessage('Registration successful!');
+      } else {
+        setRegisterMessage('Registration failed.');
+      }
+    } catch (error: any) {
+      setRegisterMessage(
+        error.response?.data?.message ||
+          'Something went wrong. Please try again.'
+      );
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <section className="wrapper">
       <form className="register-form" onSubmit={handleSubmit}>
-        <h2 className="registration-form-title"> Registration</h2>
+        <h2 className="registration-form-title">Registration</h2>
         <div className="input-field">
           <input
             type="text"
@@ -64,8 +79,8 @@ const RegistrationForm = () => {
             required
           />
         </div>
-        <button type="submit" className="register-button">
-          Register
+        <button type="submit" className="register-button" disabled={loading}>
+          {loading ? 'Registering...' : 'Register'}
         </button>
         <div className="register">
           <p>
@@ -73,6 +88,9 @@ const RegistrationForm = () => {
           </p>
         </div>
       </form>
+      {registerMessage && (
+        <div className="register-message">{registerMessage}</div>
+      )}
     </section>
   );
 };
