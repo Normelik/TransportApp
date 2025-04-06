@@ -1,7 +1,16 @@
-import React from 'react';
+import Navbar from '../components/Navbar';
 
-const Profile = () => {
-  return <div>Profile</div>;
+type Props = {
+  links: string[];
+};
+
+const Profile = ({ links }: Props) => {
+  return (
+    <div>
+      <Navbar links={links} />
+      <h1>Profile</h1>
+    </div>
+  );
 };
 
 export default Profile;

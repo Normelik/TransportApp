@@ -1,0 +1,50 @@
+.active{
+  border-bottom: 2px solid white;
+  font-weight: bold;
+}
+
+/* /* Navbar container */
+.navbar {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Logo styling */
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+  }
+  
+  /* Navigation links container */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Individual link styling */
+  .nav-item {
+    font-size: 1rem;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+  
+  /* Hover effect */
+  .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+  }
+  
+  /* Active link styling */
+  /* .nav-item.active {
+    border-bottom: 2px solid white;
+    font-weight: bold;
+  } */

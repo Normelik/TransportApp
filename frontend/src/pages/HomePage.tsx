@@ -1,7 +1,15 @@
-import React from 'react';
+import Navbar from '../components/Navbar';
 
-const HomePage = () => {
-  return <div>HomePage</div>;
+type Props = {
+  links: string[];
+};
+
+const HomePage = ({ links }: Props) => {
+  return (
+    <div>
+      <Navbar links={links} />
+    </div>
+  );
 };
 
 export default HomePage;

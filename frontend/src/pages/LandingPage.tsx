@@ -1,7 +1,14 @@
-const LandingPage = () => {
+import Navbar from '../components/Navbar';
+
+type Props = {
+  links: string[];
+};
+
+const LandingPage = ({ links }: Props) => {
   return (
     <div>
-      <h1>Landing page</h1>
+      <Navbar links={links} />
+      <h1>Welcome to Transport App</h1>
     </div>
   );
 };

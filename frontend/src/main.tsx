@@ -3,36 +3,39 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import ShipmentsPage from './pages/ShipmentsPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import RegistrationForm from './components/ui/Registration/RegistrationForm.tsx';
+import LandingPage from './pages/LandingPage.tsx';
+
+const privateLinks: string[] = ['About', 'Shipments', 'Profile', 'Register'];
+const publicLinks: string[] = ['About', 'Profile', 'Register'];
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage />,
+    element: <LandingPage links={publicLinks} />,
     errorElement: <NotFoundPage />,
   },
   {
     path: '/home',
-    element: <HomePage />,
+    element: <HomePage links={privateLinks} />,
     errorElement: <NotFoundPage />,
   },
   {
     path: '/about',
-    element: <AboutPage />,
+    element: <AboutPage links={privateLinks} />,
   },
   {
     path: '/shipments',
-    element: <ShipmentsPage />,
+    element: <ShipmentsPage links={privateLinks} />,
   },
   {
     path: '/profile',
-    element: <ProfilePage />,
+    element: <ProfilePage links={privateLinks} />,
   },
   {
     path: '/register',

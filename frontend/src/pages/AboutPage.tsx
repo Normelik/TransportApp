@@ -1,7 +1,16 @@
-import React from 'react';
+import Navbar from '../components/Navbar';
 
-const About = () => {
-  return <div>About the company</div>;
+type Props = {
+  links: string[];
+};
+
+const About = ({ links }: Props) => {
+  return (
+    <div>
+      <Navbar links={links} />
+      <h1>About the company</h1>
+    </div>
+  );
 };
 
 export default About;
