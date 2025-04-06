@@ -1,5 +1,5 @@
-import { Button } from '@chakra-ui/react';
-import shipments from '../data';
+import shipments from '../assets/Data';
+import Navbar from '../components/Navbar';
 import Shipment from '../components/ui/Shipment';
 
 interface Shipment {
@@ -11,11 +11,15 @@ interface Shipment {
   text: string;
   duration: number;
 }
+type Props = {
+  links: string[];
+};
 
-const ShipmentsPage = () => {
+const ShipmentsPage = ({ links }: Props) => {
   return (
     <div>
       <h1>List of shipments</h1>
+      <Navbar links={links} />
       <div>
         {shipments.map((oneShipment: Shipment) => {
           return <Shipment key={oneShipment.id} {...oneShipment} />;
