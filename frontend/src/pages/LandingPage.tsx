@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import './LandingPage.css';
 
@@ -29,7 +30,7 @@ const LandingPage = ({ links }: Props) => {
         <br />
         <p>
           Už jsem se potkal s CSS, HTML, REST API, Spring Security, JWT, Jira,
-          Visual Studio Code, IntelliJ IDEA, JUnit 5
+          Visual Studio Code, IntelliJ IDEA, JUnit
         </p>
         <h1>🚛 Co tu jednou bude</h1>
         <ul>
@@ -43,6 +44,11 @@ const LandingPage = ({ links }: Props) => {
           <li> 🔔 Notifikace: Základní systém upozornění na změny stavu</li>
           <li> 📍 Poloha dodávky: aktualní poloha dodávky zobrazená na mapě</li>
         </ul>
+        <Link to={{ pathname: './home' }}>
+          <button className="enter-button" type="submit">
+            Vstoupit
+          </button>
+        </Link>
       </section>
     </div>
   );

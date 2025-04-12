@@ -44,7 +44,7 @@
   }
   
   /* Active link styling */
-  /* .nav-item.active {
+  .nav-item.active {
     border-bottom: 2px solid white;
     font-weight: bold;
-  } */
+  }

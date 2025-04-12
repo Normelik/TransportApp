@@ -39,3 +39,15 @@ h1, h2, h3 {
     list-style: none;
     padding-left: 1rem;
   }
+
+  .enter-button {
+    background-color: #007bff;
+    color: white;
+    margin: 20px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  
+  }
