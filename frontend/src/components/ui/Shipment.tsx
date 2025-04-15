@@ -1,4 +1,12 @@
-import { Button } from '@chakra-ui/react';
+interface IShipment {
+  id: number;
+  unloadingTime: string;
+  unloadingPlace: string;
+  plateNumber: string;
+  isBooked: boolean;
+  text: string;
+  duration: number;
+}
 
 const Shipment = ({
   unloadingTime,
@@ -6,16 +14,17 @@ const Shipment = ({
   isBooked,
   text,
   duration,
-}) => {
+}: IShipment) => {
   return (
     <div className="one-shipment">
       <p>{unloadingPlace}</p>
       <p>{unloadingTime}</p>
       <p>{text}</p>
       <p>{duration}</p>
+      <p>{isBooked}</p>
       <div>
-        <Button>Edit</Button>
-        <Button>delete</Button>
+        <button>Edit</button>
+        <button>delete</button>
       </div>
     </div>
   );

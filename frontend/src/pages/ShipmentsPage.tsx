@@ -1,8 +1,9 @@
-import shipments from '../assets/Data';
+import axios from 'axios';
 import Navbar from '../components/Navbar';
+import { useState, useEffect } from 'react';
 import Shipment from '../components/ui/Shipment';
 
-interface Shipment {
+interface IShipment {
   id: number;
   unloadingTime: string;
   unloadingPlace: string;
@@ -11,20 +12,50 @@ interface Shipment {
   text: string;
   duration: number;
 }
+
 type Props = {
   links: string[];
 };
 
+const API_BASE_URL = 'http://localhost:8080/api';
+
+// const API_KEY = ""
+
+const API_OPTIONS = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    // authorization:"Bearer ${API_KEY}"
+  },
+};
+
 const ShipmentsPage = ({ links }: Props) => {
+  const [shipments, setShipments] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/shipments`, API_OPTIONS)
+      .then((response) => {
+        setShipments(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching shipments: ', error);
+      });
+  }, []);
+
   return (
     <div>
-      <h1>List of shipments</h1>
-      <Navbar links={links} />
-      <div>
-        {shipments.map((oneShipment: Shipment) => {
-          return <Shipment key={oneShipment.id} {...oneShipment} />;
-        })}
-      </div>
+      <header>
+        <Navbar links={links} />
+      </header>
+      <section>
+        <h1>List of shipments</h1>
+        <div>
+          {shipments.map((oneShipment: IShipment) => {
+            return <Shipment key={oneShipment.id} {...oneShipment} />;
+          })}
+        </div>
+      </section>
     </div>
   );
 };
