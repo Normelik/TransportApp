@@ -31,6 +31,7 @@ const API_OPTIONS = {
 
 const ShipmentsPage = ({ links }: Props) => {
   const [shipments, setShipments] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     axios
@@ -40,6 +41,7 @@ const ShipmentsPage = ({ links }: Props) => {
       })
       .catch((error) => {
         console.error('Error fetching shipments: ', error);
+        setErrorMessage('Error fetching shipments. Please try it again later.');
       });
   }, []);
 
@@ -55,6 +57,7 @@ const ShipmentsPage = ({ links }: Props) => {
             return <Shipment key={oneShipment.id} {...oneShipment} />;
           })}
         </div>
+        {errorMessage && <p> {errorMessage} </p>}
       </section>
     </div>
   );
