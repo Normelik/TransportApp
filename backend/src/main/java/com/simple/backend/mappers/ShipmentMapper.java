@@ -1,6 +1,7 @@
 package com.simple.backend.mappers;
 
 import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.entities.ShipmentEntity;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,17 @@ public class ShipmentMapper {
 
     public ShipmentDTO toDTO(ShipmentEntity shipment) {
         return new ShipmentDTO(
+                shipment.getUnloadingTime(),
+                shipment.getUnloadingPlace(),
+                shipment.getPlateNumber(),
+                shipment.isBooked(),
+                shipment.getText(),
+                shipment.getDuration()
+        );
+    }
+    public ResponseShipmentDTO toResponseDTO(ShipmentEntity shipment) {
+        return new ResponseShipmentDTO(
+                shipment.getId(),
                 shipment.getUnloadingTime(),
                 shipment.getUnloadingPlace(),
                 shipment.getPlateNumber(),

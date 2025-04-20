@@ -1,7 +1,7 @@
 package com.simple.backend.controllers;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +18,17 @@ public class ShipmentController {
     private final ShipmentService shipmentService;
 
     @GetMapping
-    public List<ShipmentDTO> getAllShipments() {
+    public List<ResponseShipmentDTO> getAllShipments() {
         return shipmentService.getAllShipments();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShipmentDTO> getShipmentById(@PathVariable Long id) {
+    public ResponseEntity<ResponseShipmentDTO> getShipmentById(@PathVariable Long id) {
         return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
+    public ResponseEntity<ResponseShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
         return ResponseEntity.ok(shipmentService.createShipment(shipmentDTO));
     }
 

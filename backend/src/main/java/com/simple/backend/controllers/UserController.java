@@ -1,9 +1,8 @@
 package com.simple.backend.controllers;
 
 import com.simple.backend.DTO.RequestUserDTO;
-import com.simple.backend.DTO.ResponseUserDTO;
+import com.simple.backend.DTO.response.ResponseUserDTO;
 import com.simple.backend.Service.impl.UserServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

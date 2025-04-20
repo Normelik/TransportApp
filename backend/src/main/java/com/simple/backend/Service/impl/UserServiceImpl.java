@@ -1,20 +1,16 @@
 package com.simple.backend.Service.impl;
 
 import com.simple.backend.DTO.RequestUserDTO;
-import com.simple.backend.DTO.ResponseUserDTO;
+import com.simple.backend.DTO.response.ResponseUserDTO;
 import com.simple.backend.Service.UserService;
 import com.simple.backend.entities.UserEntity;
 import com.simple.backend.repositories.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

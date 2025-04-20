@@ -1,6 +1,7 @@
 package com.simple.backend.Service.impl;
 
 import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.mappers.ShipmentMapper;
 import com.simple.backend.entities.ShipmentEntity;
@@ -20,26 +21,26 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final ShipmentMapper shipmentMapper;
 
     @Override
-    public List<ShipmentDTO> getAllShipments() {
+    public List<ResponseShipmentDTO> getAllShipments() {
         return shipmentRepository.findAll()
                 .stream()
-                .map(shipmentMapper::toDTO)
+                .map(shipmentMapper::toResponseDTO)
                 .toList();
     }
 
     @Override
-    public ShipmentDTO getShipmentById(Long id) {
+    public ResponseShipmentDTO getShipmentById(Long id) {
         ShipmentEntity shipment = shipmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Shipment not found with ID: " + id));
-        return shipmentMapper.toDTO(shipment);
+        return shipmentMapper.toResponseDTO(shipment);
     }
 
     @Override
-    public ShipmentDTO createShipment(ShipmentDTO shipmentDTO) {
+    public ResponseShipmentDTO createShipment(ShipmentDTO shipmentDTO) {
         ShipmentEntity shipment = shipmentMapper.toEntity(shipmentDTO);
         try {
             ShipmentEntity savedShipment = shipmentRepository.save(shipment);
-            return shipmentMapper.toDTO(savedShipment);
+            return shipmentMapper.toResponseDTO(savedShipment);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
