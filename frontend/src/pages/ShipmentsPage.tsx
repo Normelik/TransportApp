@@ -32,6 +32,13 @@ const API_OPTIONS = {
 const ShipmentsPage = ({ links }: Props) => {
   const [shipments, setShipments] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const shipmentsTableHeader = [
+    'unloading place',
+    'unloading time',
+    'text',
+    'duration',
+    'is booked',
+  ];
 
   useEffect(() => {
     axios
@@ -52,6 +59,7 @@ const ShipmentsPage = ({ links }: Props) => {
       </header>
       <section>
         <h1>List of shipments</h1>
+        <div>{shipmentsTableHeader.map((item) => item)}</div>
         <div>
           {shipments.map((oneShipment: IShipment) => {
             return <Shipment key={oneShipment.id} {...oneShipment} />;
