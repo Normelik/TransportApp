@@ -8,8 +8,8 @@ import ShipmentsPage from './pages/ShipmentsPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import HomePage from './pages/HomePage.tsx';
-import RegistrationForm from './components/ui/Registration/RegistrationForm.tsx';
 import LandingPage from './pages/LandingPage.tsx';
+import RegistrationForm from './components/Registration/RegistrationForm.tsx';
 
 const privateLinks: string[] = ['About', 'Shipments', 'Profile', 'Register'];
 const publicLinks: string[] = ['About', 'Profile', 'Register'];

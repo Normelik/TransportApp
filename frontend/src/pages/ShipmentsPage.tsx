@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import { useState, useEffect } from 'react';
-import Shipment from '../components/ui/Shipment';
+import Shipment from '../components/Shipment';
 
 interface IShipment {
   id: number;
