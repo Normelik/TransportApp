@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.12.0",
     "@emotion/react": "^11.14.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
