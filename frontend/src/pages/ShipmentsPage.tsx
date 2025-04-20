@@ -35,9 +35,11 @@ const ShipmentsPage = ({ links }: Props) => {
   const shipmentsTableHeader = [
     'unloading place',
     'unloading time',
-    'text',
+    'plate number',
     'duration',
-    'is booked',
+    'text',
+    'edit',
+    'delete',
   ];
 
   useEffect(() => {
@@ -58,14 +60,22 @@ const ShipmentsPage = ({ links }: Props) => {
         <Navbar links={links} />
       </header>
       <section>
-        <h1>List of shipments</h1>
-        <div>{shipmentsTableHeader.map((item) => item)}</div>
+        <h1 className="text-2xl py-4 font-bold text-gray-900 flex justify-center ">
+          List of shipments
+        </h1>
+        <div className="bg-gray-300 grid grid-cols-7 gap-3 items-center px-10">
+          {shipmentsTableHeader.map((item) => (
+            <div>{item}</div>
+          ))}
+        </div>
         <div>
           {shipments.map((oneShipment: IShipment) => {
             return <Shipment key={oneShipment.id} {...oneShipment} />;
           })}
         </div>
-        {errorMessage && <p> {errorMessage} </p>}
+        <div className="text-red-600 flex justify-center items-center mt-5">
+          {errorMessage && <p> {errorMessage} </p>}
+        </div>
       </section>
     </div>
   );

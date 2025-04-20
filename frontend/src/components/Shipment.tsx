@@ -1,9 +1,10 @@
+import { RiDeleteBin6Line, RiEdit2Line } from 'react-icons/ri';
+
 interface IShipment {
   id: number;
   unloadingTime: string;
   unloadingPlace: string;
   plateNumber: string;
-  isBooked: boolean;
   text: string;
   duration: number;
 }
@@ -11,21 +12,23 @@ interface IShipment {
 const Shipment = ({
   unloadingTime,
   unloadingPlace,
-  isBooked,
+  plateNumber,
   text,
   duration,
 }: IShipment) => {
   return (
-    <div className="one-shipment">
+    <div className="grid grid-cols-7 gap-3 items-center px-10">
       <p>{unloadingPlace}</p>
       <p>{unloadingTime}</p>
-      <p>{text}</p>
+      <p>{plateNumber}</p>
       <p>{duration}</p>
-      <p>{isBooked}</p>
-      <div>
-        <button>Edit</button>
-        <button>delete</button>
-      </div>
+      <p>{text}</p>
+      <button>
+        <RiEdit2Line />
+      </button>
+      <button>
+        <RiDeleteBin6Line />
+      </button>
     </div>
   );
 };
