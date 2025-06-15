@@ -1,31 +1,31 @@
-interface IShipment {
-  id: number;
-  unloadingTime: string;
-  unloadingPlace: string;
-  plateNumber: string;
-  isBooked: boolean;
-  text: string;
-  duration: number;
-}
+import { RiDeleteBin6Line, RiEdit2Line } from 'react-icons/ri';
+import { IShipment } from '../interfaces/IShipment';
 
 const Shipment = ({
+  id,
   unloadingTime,
   unloadingPlace,
-  isBooked,
+  plateNumber,
   text,
   duration,
+  onDelete,
 }: IShipment) => {
   return (
-    <div className="one-shipment">
+    <div className="grid grid-cols-7 gap-3 items-center px-10">
       <p>{unloadingPlace}</p>
       <p>{unloadingTime}</p>
-      <p>{text}</p>
+      <p>{plateNumber}</p>
       <p>{duration}</p>
-      <p>{isBooked}</p>
-      <div>
-        <button>Edit</button>
-        <button>delete</button>
-      </div>
+      <p>{text}</p>
+      <button className="text-blue-500 hover:text-blue-700">
+        <RiEdit2Line />
+      </button>
+      <button
+        onClick={() => onDelete(id)}
+        className="text-red-500 hover:text-red-700"
+      >
+        <RiDeleteBin6Line />
+      </button>
     </div>
   );
 };

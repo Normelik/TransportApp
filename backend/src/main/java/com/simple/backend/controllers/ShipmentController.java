@@ -1,7 +1,7 @@
 package com.simple.backend.controllers;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.RequestShipmentDTO;
+import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +18,23 @@ public class ShipmentController {
     private final ShipmentService shipmentService;
 
     @GetMapping
-    public List<ShipmentDTO> getAllShipments() {
+    public List<ResponseShipmentDTO> getAllShipments() {
         return shipmentService.getAllShipments();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShipmentDTO> getShipmentById(@PathVariable Long id) {
+    public ResponseEntity<ResponseShipmentDTO> getShipmentById(@PathVariable Long id) {
         return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
-        return ResponseEntity.ok(shipmentService.createShipment(shipmentDTO));
+    public ResponseEntity<ResponseShipmentDTO> createShipment(@Valid @RequestBody RequestShipmentDTO requestShipmentDTO) {
+        return ResponseEntity.ok(shipmentService.createShipment(requestShipmentDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDTO) {
-        return ResponseEntity.ok(shipmentService.updateShipment(id, shipmentDTO));
+    public ResponseEntity<RequestShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody RequestShipmentDTO requestShipmentDTO) {
+        return ResponseEntity.ok(shipmentService.updateShipment(id, requestShipmentDTO));
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,6 @@
 package com.simple.backend.mappers;
 
-import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.RequestShipmentDTO;
 import com.simple.backend.DTO.WarehouseDTO;
 import com.simple.backend.entities.ShipmentEntity;
 import com.simple.backend.entities.WarehouseEntity;
@@ -38,7 +38,7 @@ public class WarehouseMapper {
     }
 
     public WarehouseDTO toDTO(WarehouseEntity warehouseEntity) {
-        List<ShipmentDTO> dtoList = warehouseEntity.getPlannedShipments()
+        List<RequestShipmentDTO> dtoList = warehouseEntity.getPlannedShipments()
                 .stream()
                 .map(shipmentMapper::toDTO).toList();
         return new WarehouseDTO(

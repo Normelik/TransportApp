@@ -1,7 +1,7 @@
 package com.simple.backend.Service;
 
 import com.simple.backend.DTO.RequestUserDTO;
-import com.simple.backend.DTO.ResponseUserDTO;
+import com.simple.backend.DTO.response.ResponseUserDTO;
 import org.apache.tomcat.websocket.AuthenticationException;
 
 public interface UserService {
