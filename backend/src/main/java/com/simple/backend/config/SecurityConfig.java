@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req
                                 .requestMatchers("/api/health-check").permitAll()
-                                .requestMatchers("/api/shipments").permitAll()
+                                .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/public/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(ses -> ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

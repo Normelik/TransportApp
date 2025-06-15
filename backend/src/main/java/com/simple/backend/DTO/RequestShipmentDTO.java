@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 
-public record ShipmentDTO(
+public record RequestShipmentDTO(
         @NotBlank(message = "Unloading time can't be empty") String unloadingTime,
         @NotBlank(message = "Unloading place can't be empty") String unloadingPlace,
         @NotBlank(message = "Plate number can't be empty") String plateNumber,

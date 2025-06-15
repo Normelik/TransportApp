@@ -2,15 +2,16 @@ import { RiDeleteBin6Line, RiEdit2Line } from 'react-icons/ri';
 import { IShipment } from '../interfaces/IShipment';
 
 const Shipment = ({
+  id,
   unloadingTime,
   unloadingPlace,
   plateNumber,
   text,
   duration,
+  onDelete,
 }: IShipment) => {
   return (
     <div className="grid grid-cols-7 gap-3 items-center px-10">
-      <p>{unloadingPlace}</p>
       <p>{unloadingPlace}</p>
       <p>{unloadingTime}</p>
       <p>{plateNumber}</p>
@@ -19,7 +20,10 @@ const Shipment = ({
       <button className="text-blue-500 hover:text-blue-700">
         <RiEdit2Line />
       </button>
-      <button className="text-red-500 hover:text-red-700">
+      <button
+        onClick={() => onDelete(id)}
+        className="text-red-500 hover:text-red-700"
+      >
         <RiDeleteBin6Line />
       </button>
     </div>

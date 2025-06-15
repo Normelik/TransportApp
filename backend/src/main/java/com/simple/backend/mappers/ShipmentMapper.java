@@ -1,6 +1,6 @@
 package com.simple.backend.mappers;
 
-import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.RequestShipmentDTO;
 import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.entities.ShipmentEntity;
 import org.springframework.stereotype.Component;
@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShipmentMapper {
 
-    public ShipmentEntity toEntity(ShipmentDTO dto) {
-        ShipmentEntity shipment = new ShipmentEntity();
-        shipment.setUnloadingTime(dto.unloadingTime());
-        shipment.setUnloadingPlace(dto.unloadingPlace());
-        shipment.setPlateNumber(dto.plateNumber());
-        shipment.setBooked(dto.isBooked());
-        shipment.setText(dto.text());
-        shipment.setDuration(dto.duration() != null ? dto.duration() : 0);
-        return shipment;
+    public ShipmentEntity toEntity(RequestShipmentDTO dto) {
+        ShipmentEntity shipmentEntity = new ShipmentEntity();
+        shipmentEntity.setUnloadingTime(dto.unloadingTime());
+        shipmentEntity.setUnloadingPlace(dto.unloadingPlace());
+        shipmentEntity.setPlateNumber(dto.plateNumber());
+        shipmentEntity.setBooked(dto.isBooked());
+        shipmentEntity.setText(dto.text());
+        shipmentEntity.setDuration(dto.duration() != null ? dto.duration() : 0);
+        return shipmentEntity;
     }
 
-    public ShipmentDTO toDTO(ShipmentEntity shipment) {
-        return new ShipmentDTO(
+    public RequestShipmentDTO toDTO(ShipmentEntity shipment) {
+        return new RequestShipmentDTO(
                 shipment.getUnloadingTime(),
                 shipment.getUnloadingPlace(),
                 shipment.getPlateNumber(),

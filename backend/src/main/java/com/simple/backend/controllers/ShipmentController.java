@@ -1,6 +1,6 @@
 package com.simple.backend.controllers;
 
-import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.RequestShipmentDTO;
 import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import jakarta.validation.Valid;
@@ -28,13 +28,13 @@ public class ShipmentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseShipmentDTO> createShipment(@Valid @RequestBody ShipmentDTO shipmentDTO) {
-        return ResponseEntity.ok(shipmentService.createShipment(shipmentDTO));
+    public ResponseEntity<ResponseShipmentDTO> createShipment(@Valid @RequestBody RequestShipmentDTO requestShipmentDTO) {
+        return ResponseEntity.ok(shipmentService.createShipment(requestShipmentDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody ShipmentDTO shipmentDTO) {
-        return ResponseEntity.ok(shipmentService.updateShipment(id, shipmentDTO));
+    public ResponseEntity<RequestShipmentDTO> updateShipment(@PathVariable Long id, @RequestBody RequestShipmentDTO requestShipmentDTO) {
+        return ResponseEntity.ok(shipmentService.updateShipment(id, requestShipmentDTO));
     }
 
     @DeleteMapping("/{id}")

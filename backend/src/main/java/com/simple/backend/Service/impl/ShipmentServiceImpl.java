@@ -1,6 +1,6 @@
 package com.simple.backend.Service.impl;
 
-import com.simple.backend.DTO.ShipmentDTO;
+import com.simple.backend.DTO.RequestShipmentDTO;
 import com.simple.backend.DTO.response.ResponseShipmentDTO;
 import com.simple.backend.Service.ShipmentService;
 import com.simple.backend.mappers.ShipmentMapper;
@@ -36,8 +36,8 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public ResponseShipmentDTO createShipment(ShipmentDTO shipmentDTO) {
-        ShipmentEntity shipment = shipmentMapper.toEntity(shipmentDTO);
+    public ResponseShipmentDTO createShipment(RequestShipmentDTO requestShipmentDTO) {
+        ShipmentEntity shipment = shipmentMapper.toEntity(requestShipmentDTO);
         try {
             ShipmentEntity savedShipment = shipmentRepository.save(shipment);
             return shipmentMapper.toResponseDTO(savedShipment);
@@ -48,16 +48,16 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Override
     @Transactional
-    public ShipmentDTO updateShipment(Long id, ShipmentDTO shipmentDTO) {
+    public RequestShipmentDTO updateShipment(Long id, RequestShipmentDTO requestShipmentDTO) {
         ShipmentEntity existingShipment = shipmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Shipment not found with ID: " + id));
 
-        if(shipmentDTO.unloadingTime() != null) existingShipment.setUnloadingTime(shipmentDTO.unloadingTime());
-        if(shipmentDTO.unloadingPlace() != null) existingShipment.setUnloadingPlace(shipmentDTO.unloadingPlace());
-        if(shipmentDTO.plateNumber() != null) existingShipment.setPlateNumber(shipmentDTO.plateNumber());
-        existingShipment.setBooked(shipmentDTO.isBooked());
-        if(shipmentDTO.text() != null) existingShipment.setText(shipmentDTO.text());
-        if(shipmentDTO.duration() != null) existingShipment.setDuration(shipmentDTO.duration());
+        if(requestShipmentDTO.unloadingTime() != null) existingShipment.setUnloadingTime(requestShipmentDTO.unloadingTime());
+        if(requestShipmentDTO.unloadingPlace() != null) existingShipment.setUnloadingPlace(requestShipmentDTO.unloadingPlace());
+        if(requestShipmentDTO.plateNumber() != null) existingShipment.setPlateNumber(requestShipmentDTO.plateNumber());
+        existingShipment.setBooked(requestShipmentDTO.isBooked());
+        if(requestShipmentDTO.text() != null) existingShipment.setText(requestShipmentDTO.text());
+        if(requestShipmentDTO.duration() != null) existingShipment.setDuration(requestShipmentDTO.duration());
 
         ShipmentEntity updatedShipment = shipmentRepository.save(existingShipment);
         return shipmentMapper.toDTO(updatedShipment);

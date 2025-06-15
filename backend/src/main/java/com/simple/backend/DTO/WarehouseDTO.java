@@ -5,7 +5,7 @@ import java.util.List;
 public record WarehouseDTO (
         String name,
         String unloadingPlace,
-        List<ShipmentDTO> plannedShipments,
+        List<RequestShipmentDTO> plannedShipments,
         String owner,
         String supplier
 ) {

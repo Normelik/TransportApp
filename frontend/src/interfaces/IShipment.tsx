@@ -6,4 +6,5 @@ export interface IShipment {
   isBooked: boolean;
   text: string;
   duration: number;
+  onDelete: (id: number) => void;
 }
